@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Field } from "../Field/Field";
 import styles from "./Board.module.scss";
 
-function calculateWinner(fields) {
+function calculateWinner(fields: any[]) {
     const lines = [
         [0, 1, 2],
         [3, 4, 5],
@@ -22,29 +22,26 @@ function calculateWinner(fields) {
     return null;
 }
 
-export const Board = () => {
-    const [xTurn, setXTurn] = useState(true);
-    const [fields, setfields] = useState(Array(9).fill(null));
+export const Board = ({ xTurn, fields, onPlay }: any) => {
+    function handleClick(i: number) {
+        if (calculateWinner(fields) || fields[i]) {
+            return;
+        }
+        const nextFields = fields.slice();
+        if (xTurn) {
+            nextFields[i] = "X";
+        } else {
+            nextFields[i] = "O";
+        }
+        onPlay(nextFields);
+    }
+
     const winner = calculateWinner(fields);
     let status;
     if (winner) {
-        status = "Winner: " + winner;
+        status = 'Winner: ' + winner;
     } else {
-        status = "Next player: " + (xTurn ? "X" : "O");
-    }
-
-    function handleClick(i) {
-        if (fields[i] || calculateWinner(fields)) {
-            return;
-        }
-        const nextfields = fields.slice();
-        if (xTurn) {
-            nextfields[i] = "X";
-        } else {
-            nextfields[i] = "O";
-        }
-        setfields(nextfields);
-        setXTurn(!xTurn);
+        status = 'Next player: ' + (xTurn ? 'X' : 'O');
     }
 
     return (
