@@ -1,0 +1,12 @@
+.container {
+    border: 50px solid rgba(0, 0, 0, 0.205);
+    background-color: rgba(127, 255, 212, 0.205);
+    width: 300px;
+    aspect-ratio: 1/1;
+}
+
+.fields {
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
